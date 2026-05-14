@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>강슬기 Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+    * { box-sizing: border-box; max-width: 100%; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(197,145,101,.28), transparent 30%),
+        radial-gradient(circle at 8% 18%, rgba(255,255,255,.9), transparent 24%),
+        linear-gradient(135deg, #f8f0e4 0%, #efe0cc 48%, #f7efe4 100%);
+      color: #2b211b;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: .18; z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: center; gap: 24px;
+      padding: 20px 7vw;
+      background: rgba(248,240,228,.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(99,73,52,.12);
+    }
+    .logo { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
+    nav { display: flex; gap: 22px; font-size: 12px; letter-spacing: 1.7px; color: #6e5746; }
+    nav a:hover { color: #2b211b; }
+
+    .hero {
+      min-height: 82vh;
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 42px; align-items: center;
+      padding: 56px 7vw 36px;
+    }
+    .eyebrow { color: #8a674e; letter-spacing: 2.4px; font-size: 13px; font-weight: 700; margin-bottom: 14px; }
+    h1 {
+      margin: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(54px, 8vw, 118px);
+      line-height: .92;
+      letter-spacing: -4px;
+    }
+    .hero-copy { margin-top: 28px; max-width: 670px; font-size: 18px; line-height: 1.85; color: #59483c; }
+    .actions { display: flex; gap: 12px; margin-top: 34px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 0 22px; border-radius: 999px;
+      border: 1px solid rgba(68,45,30,.18); background: rgba(255,250,242,.55);
+      backdrop-filter: blur(10px); font-weight: 700; font-size: 14px;
+    }
+    .btn.primary { background: #2b211b; color: #fff7ec; border-color: #2b211b; }
+
+    .portrait-wrap { position: relative; min-height: 560px; display: flex; align-items: center; justify-content: center; }
+    .portrait-card {
+      width: min(440px, 100%); aspect-ratio: 4/5.2; border-radius: 34px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(68,45,30,.22);
+      transform: rotate(1.2deg);
+      background: #efe2d0;
+    }
+    .portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .float-card {
+      position: absolute; left: 0; bottom: 52px; width: min(310px, 82%);
+      padding: 20px; border-radius: 24px;
+      background: rgba(255,250,242,.62); border: 1px solid rgba(255,255,255,.72);
+      backdrop-filter: blur(18px); box-shadow: 0 20px 55px rgba(68,45,30,.16);
+    }
+    .float-card b { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; }
+    .float-card p { margin: 8px 0 0; color: #705747; line-height: 1.55; font-size: 14px; }
+
+    section { padding: 72px 7vw; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom: 28px; }
+    h2 { margin:0; font-family:'Playfair Display', Georgia, serif; font-size: clamp(34px, 5vw, 64px); letter-spacing:-2px; }
+    .section-head p { max-width: 520px; color:#6e5746; line-height:1.7; }
+
+    .bento { display:grid; grid-template-columns: 1.2fr .8fr 1fr; gap:16px; }
+    .tile {
+      min-height: 190px; padding: 28px; border-radius: 30px;
+      background: rgba(255,250,242,.58); border: 1px solid rgba(255,255,255,.70);
+      box-shadow: 0 18px 50px rgba(68,45,30,.08); backdrop-filter: blur(16px);
+    }
+    .tile.large { grid-column: span 2; min-height: 270px; }
+    .tile.dark { background:#2b211b; color:#fff5e8; }
+    .tile h3 { margin:0 0 14px; font-size:22px; }
+    .tile p, .tile li { color: inherit; opacity:.78; line-height:1.8; }
+    .metric { font-family:'Playfair Display', Georgia, serif; font-size:64px; line-height:1; margin-bottom:12px; }
+
+    .timeline { display:grid; gap:14px; }
+    .time-item {
+      display:grid; grid-template-columns: 140px 22px 1fr; gap:18px; align-items:start;
+      padding: 22px; border-radius: 26px; background: rgba(255,250,242,.58);
+      border: 1px solid rgba(255,255,255,.7); backdrop-filter: blur(14px);
+    }
+    .year { color:#8a674e; font-weight:800; }
+    .dot { width:13px; height:13px; margin-top:6px; border-radius:50%; background:#2b211b; box-shadow:0 0 0 7px rgba(43,33,27,.08); }
+    .time-item h3 { margin:0; font-size:20px; }
+    .time-item p { margin:8px 0 0; color:#6b5546; line-height:1.7; }
+
+    .chips { display:flex; flex-wrap:wrap; gap:10px; }
+    .chip { padding:10px 14px; border-radius:999px; background:rgba(43,33,27,.08); color:#4b392d; font-size:14px; }
+
+    .contact-card {
+      display:grid; grid-template-columns: 1fr 1fr; gap:18px;
+      padding: 34px; border-radius: 34px; background:#2b211b; color:#fff5e8;
+    }
+    .contact-card a, .contact-card span { color:#fff5e8; opacity:.86; }
+    footer { padding: 34px 7vw; color:#7b6656; font-size:13px; }
+
+    @media (max-width: 768px) {
+      header { align-items:flex-start; flex-direction:column; padding:18px 5vw; }
+      nav { flex-direction:column; gap:8px; width:100%; }
+      .hero { grid-template-columns:1fr; min-height:auto; padding:42px 5vw 24px; }
+      h1 { letter-spacing:-2px; }
+      .hero-copy { font-size:15px; margin-top:20px; }
+      .portrait-wrap { min-height:auto; padding-top:10px; }
+      .portrait-card { width:100%; max-width:330px; border-radius:28px; }
+      .float-card { position:relative; left:auto; bottom:auto; width:100%; margin-top:-34px; }
+      section { padding:48px 5vw; }
+      .section-head { display:block; }
+      .section-head p { font-size:14px; }
+      .bento { grid-template-columns:1fr; }
+      .tile.large { grid-column:auto; }
+      .tile { min-height:auto; padding:22px; border-radius:24px; }
+      .metric { font-size:46px; }
+      .time-item { grid-template-columns:1fr; gap:8px; padding:20px; }
+      .dot { display:none; }
+      .time-item h3 { font-size:18px; }
+      .time-item p { font-size:14px; }
+      .contact-card { grid-template-columns:1fr; padding:24px; border-radius:26px; }
+      .actions { flex-direction:column; }
+      .btn { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header>
+    <a class="logo" href="#top">Kang Seulgi</a>
+    <nav>
+      <a href="#about">ABOUT</a>
+      <a href="#work">WORK</a>
+      <a href="#education">EDUCATION</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">EDUCATION · BAKING · AI CONTENTS</div>
+        <h1>강슬기<br>Portfolio</h1>
+        <p class="hero-copy">
+          조리교육과 베이킹 콘텐츠, 진로·취창업 교육, AI 활용 교육을 연결하는 교육기획자입니다.
+          현장 강의 경험과 제품 개발 역량을 바탕으로 기관·학교·기업에 맞는 실습형 프로그램을 설계합니다.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:ki3216@naver.com">메일 보내기</a>
+          <a class="btn" href="#work">경력 보기</a>
+        </div>
+      </div>
+
+      <div class="portrait-wrap">
+        <div class="portrait-card">
+          <img src="profile.png" alt="강슬기 프로필 사진">
+        </div>
+        <div class="float-card">
+          <b>현재</b>
+          <p>이로운과자점 대표<br>재능개발연구소 대표<br>한국조리교육학회 이사</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>About</h2>
+        <p>단순 강의가 아니라, 교육 대상과 기관 목적에 맞춘 콘텐츠·교구·운영 프로세스까지 함께 설계합니다.</p>
+      </div>
+
+      <div class="bento">
+        <article class="tile large dark">
+          <div class="metric">10+</div>
+          <h3>현장 기반 교육 기획</h3>
+          <p>초·중·고, 대학교, 기업, 지역기관, 소상공인 컨설팅까지 다양한 현장에 맞춰 요리·베이킹·진로·AI 활용 교육을 운영했습니다.</p>
+        </article>
+        <article class="tile">
+          <h3>특허 기반 콘텐츠</h3>
+          <p>가열 없이 바로 먹는 쿠키크림을 기반으로 노오븐 베이킹 DIY와 체험형 교육 콘텐츠를 개발합니다.</p>
+        </article>
+        <article class="tile">
+          <h3>AI 교육</h3>
+          <p>ChatGPT, Gemini 등 생성형 AI를 실무·교육·창업 과정에 적용하는 강의를 진행합니다.</p>
+        </article>
+        <article class="tile large">
+          <h3>Core Keywords</h3>
+          <div class="chips">
+            <span class="chip">조리교육</span><span class="chip">베이킹 DIY</span><span class="chip">노오븐 쿠킹</span>
+            <span class="chip">진로교육</span><span class="chip">취창업캠프</span><span class="chip">AI 활용교육</span>
+            <span class="chip">소상공인 컨설팅</span><span class="chip">교육 콘텐츠 개발</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-head">
+        <h2>Work History</h2>
+        <p>타임라인 중심으로 핵심 경력을 정리했습니다.</p>
+      </div>
+      <div class="timeline">
+        <div class="time-item"><div class="year">현재</div><div class="dot"></div><div><h3>이로운과자점 대표</h3><p>냉동생지, 냉동반제품, 베이킹 DIY, 노오븐 쿠킹 키트 개발 및 교육 프로그램 운영</p></div></div>
+        <div class="time-item"><div class="year">현재</div><div class="dot"></div><div><h3>재능개발연구소 대표</h3><p>진로교육, AI 활용 교육, 강사 역량강화, 취·창업 프로그램 기획 및 운영</p></div></div>
+        <div class="time-item"><div class="year">2025–2026</div><div class="dot"></div><div><h3>기업·대학 AI 활용 및 취창업 교육</h3><p>기업, 대학교, 지역기관 대상 ChatGPT·Gemini 활용 교육, 진로로드맵, 창업 실무 교육 진행</p></div></div>
+        <div class="time-item"><div class="year">2013–2022</div><div class="dot"></div><div><h3>방과후 외부강사 및 체험교육 강사</h3><p>초등학교, 유아기관, 아동센터 등에서 요리·베이킹·공예·진로·금융 교육 운영</p></div></div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="section-head">
+        <h2>Education</h2>
+        <p>학력과 연구 기반을 함께 보여주는 구성입니다.</p>
+      </div>
+      <div class="timeline">
+        <div class="time-item"><div class="year">석사</div><div class="dot"></div><div><h3>남부대학교 조리교육학 석사 수료</h3><p>조리교육 및 베이커리 기능성 제품 관련 연구 기반 보유</p></div></div>
+        <div class="time-item"><div class="year">연구</div><div class="dot"></div><div><h3>베이커리 기능성 제품속성 연구</h3><p>고객의 개인소비가치 및 재구매행동에 미치는 영향 연구</p></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>License & Skills</h2></div>
+      <div class="chips">
+        <span class="chip">중등 정교사 2급</span><span class="chip">챗GPT교육 전문강사</span><span class="chip">SNS 마케팅지도사 1급</span>
+        <span class="chip">스피치명강사지도사</span><span class="chip">진로지도사</span><span class="chip">취창업지도사</span>
+        <span class="chip">제빵기능사</span><span class="chip">제과기능사</span><span class="chip">식품위생관리사</span><span class="chip">요리심리상담사</span>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-card">
+        <div>
+          <h2>Contact</h2>
+          <p>교육, 강의, 콘텐츠 개발, 협업 문의를 남겨주세요.</p>
+        </div>
+        <div>
+          <p><strong>Phone</strong><br><span>010-3304-5425</span></p>
+          <p><strong>Email</strong><br><a href="mailto:ki3216@naver.com">ki3216@naver.com</a></p>
+          <p><strong>Location</strong><br><span>대한민국</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Kang Seulgi. All Rights Reserved.</footer>
+</body>
+</html>
